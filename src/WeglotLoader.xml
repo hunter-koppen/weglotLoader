@@ -11,9 +11,18 @@
                 <caption>Weglot API key</caption>
                 <description>You can find the api key on the setup page in the weglot dashboard</description>
             </property>
-            <property key="defaultLanguage" type="string" required="false">
+            <property key="cache" type="boolean" required="true" defaultValue="false">
+                <caption>Cache languages?</caption>
+                <description>Setting this to true greatly improves user experience by caching Weglot's translations into your visitors' browser. Translations are kept up-to-date asynchronously</description>
+            </property>
+            <property key="hideSwitcher" type="boolean" required="true" defaultValue="false">
+                <caption>Hide Weglot switcher?</caption>
+                <description>This can be useful when you want to create your own custom switcher or don't want a switcher at all</description>
+            </property>
+            <property key="defaultLanguage" type="expression" required="false">
                 <caption>Default language</caption>
-                <description>This is the language that will be used on first load, leave empty to use the default thats set in the Weglot dashboard. Use the 2 letter format (for example en)</description>
+                <description>Specify the language to use on first load. Leave empty for Weglot's default language. Use the 2-letter format (e.g., 'en')</description>
+                <returnType type="String" />
             </property>
         </propertyGroup>
     </properties>

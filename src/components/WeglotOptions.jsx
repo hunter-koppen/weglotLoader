@@ -1,6 +1,6 @@
 import { createElement, useEffect } from "react";
 
-export function WeglotOptions({ apiKey, defaultLanguage }) {
+export function WeglotOptions({ apiKey, defaultLanguage, cache, hideSwitcher }) {
     useEffect(() => {
         // Create a script element
         const script = document.createElement("script");
@@ -12,12 +12,13 @@ export function WeglotOptions({ apiKey, defaultLanguage }) {
 
         // Initialize Weglot when the script is loaded
         script.onload = () => {
+            debugger;
             Weglot.initialize({
                 api_key: apiKey,
                 auto_switch: false,
                 auto_switch_fallback: "en",
-                hide_switcher: false,
-                cache: false
+                hide_switcher: hideSwitcher,
+                cache: cache
             });
 
             // call a function when Weglot is initialized
@@ -29,7 +30,9 @@ export function WeglotOptions({ apiKey, defaultLanguage }) {
             if (defaultLanguage && defaultLanguage !== "") {
                 const currentLanguage = Weglot.getCurrentLang();
                 if (currentLanguage !== defaultLanguage) {
-                    Weglot.switchTo(defaultLanguage);
+                    setTimeout(() => {
+                        Weglot.switchTo(defaultLanguage);
+                    }, 100);
                 }
             }
         };
