@@ -1,8 +1,7 @@
 import { createElement } from "react";
 
-import { HelloWorldSample } from "./components/HelloWorldSample";
-import "./ui/WeglotLoader.css";
+import { WeglotOptions } from "./components/WeglotOptions";
 
-export function WeglotLoader({ sampleText }) {
-    return <HelloWorldSample sampleText={sampleText} />;
+export function WeglotLoader({ apiKey, defaultLanguage }) {
+    return <WeglotOptions apiKey={apiKey} defaultLanguage={defaultLanguage} />;
 }
