@@ -4,26 +4,42 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
     <name>Weglot Loader</name>
     <description/>
-    <icon/>
     <properties>
         <propertyGroup caption="General">
-            <property key="apiKey" type="string" required="true">
-                <caption>Weglot API key</caption>
-                <description>You can find the api key on the setup page in the weglot dashboard</description>
-            </property>
-            <property key="cache" type="boolean" required="true" defaultValue="false">
-                <caption>Cache languages?</caption>
-                <description>Setting this to true greatly improves user experience by caching Weglot's translations into your visitors' browser. Translations are kept up-to-date asynchronously</description>
-            </property>
-            <property key="hideSwitcher" type="boolean" required="true" defaultValue="false">
-                <caption>Hide Weglot switcher?</caption>
-                <description>This can be useful when you want to create your own custom switcher or don't want a switcher at all</description>
-            </property>
-            <property key="defaultLanguage" type="expression" required="false">
-                <caption>Default language</caption>
-                <description>Specify the language to use on first load. Leave empty for Weglot's default language. Use the 2-letter format (e.g., 'en')</description>
-                <returnType type="String" />
-            </property>
+            <propertyGroup caption="Settings">
+                <property key="apiKey" type="string" required="true">
+                    <caption>Weglot API key</caption>
+                    <description>You can find the api key on the setup page in the weglot dashboard</description>
+                </property>
+                <property key="cache" type="boolean" required="true" defaultValue="false">
+                    <caption>Cache languages?</caption>
+                    <description>Setting this to true greatly improves user experience by caching Weglot's translations into your visitors' browser. Translations are kept up-to-date asynchronously</description>
+                </property>
+                <property key="hideSwitcher" type="boolean" required="true" defaultValue="false">
+                    <caption>Hide Weglot switcher?</caption>
+                    <description>This can be useful when you want to create your own custom switcher or don't want a switcher at all</description>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Languages">
+                <property key="languageLoad" type="enumeration" defaultValue="default" required="true">
+                    <caption>Language to load</caption>
+                    <description/>
+                    <enumerationValues>
+                        <enumerationValue key="default">Default (based on setting in Weglot Dashboard)</enumerationValue>
+                        <enumerationValue key="automatic">Automatically (automatically set based on user browser) </enumerationValue>
+                        <enumerationValue key="manual">Overwrite manually</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="autoSwitchFallback" type="string" required="false">
+                    <caption>Fallback language</caption>
+                    <description>If the language cannot be found automatically fallback to this language</description>
+                </property>
+                <property key="overwriteLanguage" type="expression" required="false">
+                    <caption>Overwrite language</caption>
+                    <description>Manually specify the language to use on first load. Use the 2-letter format (e.g., 'en')</description>
+                    <returnType type="String" />
+                </property>
+            </propertyGroup>
         </propertyGroup>
     </properties>
 </widget>

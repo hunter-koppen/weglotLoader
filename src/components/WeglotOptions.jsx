@@ -1,6 +1,6 @@
 import { createElement, useEffect } from "react";
 
-export function WeglotOptions({ apiKey, defaultLanguage, cache, hideSwitcher }) {
+export function WeglotOptions({ apiKey, overwriteLanguage, cache, hideSwitcher, autoSwitch, autoSwitchFallback }) {
     useEffect(() => {
         // Create a script element
         const script = document.createElement("script");
@@ -10,31 +10,30 @@ export function WeglotOptions({ apiKey, defaultLanguage, cache, hideSwitcher }) 
         // Append the script to the document head
         document.head.appendChild(script);
 
+        // Function to handle language checking and swapping
+        const handleLanguage = () => {
+            if (overwriteLanguage && overwriteLanguage !== "") {
+                const currentLanguage = Weglot.getCurrentLang();
+                if (currentLanguage !== overwriteLanguage) {
+                    setTimeout(() => {
+                        Weglot.switchTo(overwriteLanguage);
+                    }, 100);
+                }
+            }
+        };
+
         // Initialize Weglot when the script is loaded
         script.onload = () => {
-            debugger;
             Weglot.initialize({
-                api_key: apiKey,
-                auto_switch: false,
-                auto_switch_fallback: "en",
-                hide_switcher: hideSwitcher,
+                api_key: apiKey, // eslint-disable-line
+                auto_switch: autoSwitch, // eslint-disable-line
+                auto_switch_fallback: autoSwitchFallback, // eslint-disable-line
+                hide_switcher: hideSwitcher, // eslint-disable-line
                 cache: cache
             });
 
             // call a function when Weglot is initialized
             Weglot.on("initialized", handleLanguage);
-        };
-
-        // Function to handle language checking and swapping
-        const handleLanguage = () => {
-            if (defaultLanguage && defaultLanguage !== "") {
-                const currentLanguage = Weglot.getCurrentLang();
-                if (currentLanguage !== defaultLanguage) {
-                    setTimeout(() => {
-                        Weglot.switchTo(defaultLanguage);
-                    }, 100);
-                }
-            }
         };
 
         // Cleanup function to remove Weglot when the component unmounts
