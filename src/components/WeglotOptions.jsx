@@ -16,7 +16,7 @@ export function WeglotOptions({ apiKey, overwriteLanguage, cache, hideSwitcher, 
                 const currentLanguage = Weglot.getCurrentLang();
                 if (currentLanguage !== overwriteLanguage) {
                     setTimeout(() => {
-                        Weglot.switchTo(overwriteLanguage);
+                        Weglot.switchTo(overwriteLanguage.toLowerCase());
                     }, 100);
                 }
             }
