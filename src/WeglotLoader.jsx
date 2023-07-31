@@ -2,9 +2,17 @@ import { createElement } from "react";
 
 import { WeglotOptions } from "./components/WeglotOptions";
 
-export function WeglotLoader({ apiKey, overwriteLanguage, cache, hideSwitcher, languageLoad, autoSwitchFallback }) {
+export function WeglotLoader({
+    apiKey,
+    overwriteLanguage,
+    cache,
+    hideSwitcher,
+    languageLoad,
+    autoSwitchFallback,
+    unloadtranslation
+}) {
     // Check if all nessecary values are available
-    if (!overwriteLanguage || overwriteLanguage.status === "available") {
+    if ((!overwriteLanguage || overwriteLanguage.status === "available") && apiKey) {
         const manualLanguage = languageLoad === "manual" ? overwriteLanguage?.value : undefined;
         const autoSwitch = languageLoad === "automatic";
 
@@ -16,6 +24,7 @@ export function WeglotLoader({ apiKey, overwriteLanguage, cache, hideSwitcher, l
                 hideSwitcher={hideSwitcher}
                 autoSwitch={autoSwitch}
                 autoSwitchFallback={autoSwitchFallback}
+                unloadtranslation={unloadtranslation}
             />
         );
     } else {

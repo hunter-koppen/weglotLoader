@@ -19,6 +19,10 @@
                     <caption>Hide Weglot switcher?</caption>
                     <description>This can be useful when you want to create your own custom switcher or don't want a switcher at all</description>
                 </property>
+                <property key="unloadtranslation" type="boolean" required="true" defaultValue="false">
+                    <caption>Unload translation</caption>
+                    <description>Do you want to stop translation when the widget is no longer on the page?</description>
+                </property>
             </propertyGroup>
             <propertyGroup caption="Languages">
                 <property key="languageLoad" type="enumeration" defaultValue="default" required="true">
