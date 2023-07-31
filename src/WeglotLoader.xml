@@ -45,5 +45,21 @@
                 </property>
             </propertyGroup>
         </propertyGroup>
+        <propertyGroup caption="Translation exclusion">
+            <propertyGroup caption="Exclusion">
+                <property key="excludedElements" type="object" isList="true" required="false">
+                    <caption>Excluded elements</caption>
+                    <description>Define any elements to not translate</description>
+                    <properties>
+                        <propertyGroup caption="Selector">
+                            <property key="excludeSelector" type="string" required="false">
+                                <caption>CSS Selector</caption>
+                                <description>Enter a css selector to exclude translation (e.g. .class)</description>
+                            </property>
+                        </propertyGroup>
+                    </properties>
+                </property>
+            </propertyGroup>
+        </propertyGroup>
     </properties>
 </widget>

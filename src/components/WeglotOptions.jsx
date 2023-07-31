@@ -8,34 +8,35 @@ export function WeglotOptions({
     hideSwitcher,
     autoSwitch,
     autoSwitchFallback,
-    unloadtranslation
+    unloadtranslation,
+    excludedElements
 }) {
+    const handleLanguage = () => {
+        // If there is an overwrite language set we have to switch to that language once loaded
+        if (overwriteLanguage && overwriteLanguage !== "") {
+            const currentLanguage = Weglot.getCurrentLang();
+            if (currentLanguage !== overwriteLanguage) {
+                setTimeout(() => {
+                    Weglot.switchTo(overwriteLanguage.toLowerCase());
+                }, 100);
+            }
+        }
+    };
+
     const initializeWeglot = () => {
         // If a switcher already exists, show it again.
-        const switcher = document.querySelector("body > .weglot-container.hidden");
-        if (switcher !== null) {
-            switcher.classList.remove("hidden");
-        }
+        document.querySelector("body > .weglot-container.hidden")?.classList.remove("hidden");
+
+        const excludedArray = excludedElements?.map(element => ({ value: element.excludeSelector })) || null;
 
         Weglot.initialize({
             api_key: apiKey, // eslint-disable-line
             auto_switch: autoSwitch, // eslint-disable-line
             auto_switch_fallback: autoSwitchFallback, // eslint-disable-line
             hide_switcher: hideSwitcher, // eslint-disable-line
-            cache: cache
+            cache: cache,
+            excluded_blocks: excludedArray // eslint-disable-line
         });
-
-        // Function to handle language checking and swapping
-        const handleLanguage = () => {
-            if (overwriteLanguage && overwriteLanguage !== "") {
-                const currentLanguage = Weglot.getCurrentLang();
-                if (currentLanguage !== overwriteLanguage) {
-                    setTimeout(() => {
-                        Weglot.switchTo(overwriteLanguage.toLowerCase());
-                    }, 100);
-                }
-            }
-        };
 
         Weglot.on("initialized", handleLanguage);
     };
@@ -51,7 +52,7 @@ export function WeglotOptions({
         // Create a script element
         const scriptMinified = document.createElement("script");
         scriptMinified.src = "https://cdn.weglot.com/weglot.min.js";
-        scriptMinified.async = true;
+        scriptMinified.defer = true;
         scriptMinified.id = "weglot-minified";
 
         // Append the script to the document head
@@ -65,21 +66,15 @@ export function WeglotOptions({
         if (!unloadtranslation) {
             return;
         }
-        // first switch back to the original language
+
+        // before unloading reset back to original language
         const originalLanguage = Weglot.getAvailableLanguages()[0];
         if (originalLanguage) {
             Weglot.switchTo(originalLanguage);
         }
-        // then remove the minified script
-        const scriptMinified = document.querySelector("#weglot-minified");
-        if (scriptMinified !== null) {
-            scriptMinified.remove();
-        }
-        // then hide the switcher, we cannot destroy it otherwise it wont come back
-        const switcher = document.querySelector("body > .weglot-container");
-        if (switcher !== null) {
-            switcher.classList.add("hidden");
-        }
+
+        document.querySelector("#weglot-minified")?.remove();
+        document.querySelector("body > .weglot-container")?.classList.add("hidden");
     });
 
     return null;
