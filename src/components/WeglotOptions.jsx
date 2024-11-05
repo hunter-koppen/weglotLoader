@@ -40,13 +40,12 @@ export function WeglotOptions({
             cache: cache
         };
 
-        // Add excluded_blocks or whitelist based on translationStrategy
         if (translationStrategy === "exclusion") {
             weglotOptions.excluded_blocks = excludedArray.length > 0 ? excludedArray : null; // eslint-disable-line
         } else if (translationStrategy === "inclusion") {
-            weglotOptions.whitelist = includedArray.length > 0 ? includedArray : null; // eslint-disable-line
+            weglotOptions.whitelist = includedArray.length > 0 ? includedArray : null;
         }
-        
+
         Weglot.initialize(weglotOptions);
         Weglot.on("initialized", handleLanguage);
     };
@@ -59,16 +58,12 @@ export function WeglotOptions({
             return;
         }
 
-        // Create a script element
         const scriptMinified = document.createElement("script");
         scriptMinified.src = "https://cdn.weglot.com/weglot.min.js";
         scriptMinified.defer = true;
         scriptMinified.id = "weglot-minified";
-
-        // Append the script to the document head
         document.head.appendChild(scriptMinified);
 
-        // Initialize Weglot when the script is loaded
         scriptMinified.onload = initializeWeglot;
     }, []); // Empty dependency array to ensure the initialization runs only once on mount
 
