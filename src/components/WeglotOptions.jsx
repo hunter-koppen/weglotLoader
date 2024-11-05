@@ -9,7 +9,9 @@ export function WeglotOptions({
     autoSwitch,
     autoSwitchFallback,
     unloadtranslation,
-    excludedElements
+    translationStrategy,
+    excludedElements,
+    includedElements
 }) {
     const handleLanguage = () => {
         // If there is an overwrite language set we have to switch to that language once loaded
@@ -27,17 +29,25 @@ export function WeglotOptions({
         // If a switcher already exists, show it again.
         document.querySelector("body > .weglot-container.hidden")?.classList.remove("hidden");
 
-        const excludedArray = excludedElements?.map(element => ({ value: element.excludeSelector })) || null;
+        const excludedArray = excludedElements?.map(element => ({ value: element.excludeSelector })) || [];
+        const includedArray = includedElements?.map(element => ({ value: element.includeSelector })) || [];
 
-        Weglot.initialize({
+        const weglotOptions = {
             api_key: apiKey, // eslint-disable-line
             auto_switch: autoSwitch, // eslint-disable-line
             auto_switch_fallback: autoSwitchFallback, // eslint-disable-line
             hide_switcher: hideSwitcher, // eslint-disable-line
-            cache: cache,
-            excluded_blocks: excludedArray // eslint-disable-line
-        });
+            cache: cache
+        };
 
+        // Add excluded_blocks or whitelist based on translationStrategy
+        if (translationStrategy === "exclusion") {
+            weglotOptions.excluded_blocks = excludedArray.length > 0 ? excludedArray : null; // eslint-disable-line
+        } else if (translationStrategy === "inclusion") {
+            weglotOptions.whitelist = includedArray.length > 0 ? includedArray : null; // eslint-disable-line
+        }
+        
+        Weglot.initialize(weglotOptions);
         Weglot.on("initialized", handleLanguage);
     };
 

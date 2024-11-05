@@ -45,7 +45,31 @@
                 </property>
             </propertyGroup>
         </propertyGroup>
-        <propertyGroup caption="Translation exclusion">
+        <propertyGroup caption="Translation in/exclusion">
+            <propertyGroup caption="Strategy">
+                <property key="translationStrategy" type="enumeration" defaultValue="exclusion" required="true">
+                    <caption>Translation strategy</caption>
+                    <description>Would you like to exclude additional elements from translation or block everything except what you include?</description>
+                    <enumerationValues>
+                        <enumerationValue key="exclusion">Exclusion</enumerationValue>
+                        <enumerationValue key="inclusion">Inclusion</enumerationValue>
+                    </enumerationValues>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Inclusion">
+                <property key="includedElements" type="object" isList="true" required="false">
+                    <caption>Included elements</caption>
+                    <description>Define any elements that will be translated</description>
+                    <properties>
+                        <propertyGroup caption="Selector">
+                            <property key="includeSelector" type="string" required="false">
+                                <caption>CSS Selector</caption>
+                                <description>Enter a css selector to include translation (e.g. .class)</description>
+                            </property>
+                        </propertyGroup>
+                    </properties>
+                </property>
+            </propertyGroup>
             <propertyGroup caption="Exclusion">
                 <property key="excludedElements" type="object" isList="true" required="false">
                     <caption>Excluded elements</caption>

@@ -9,5 +9,12 @@ export function getProperties(values, defaultProperties, target) {
     } else if (values.languageLoad === "manual") {
         hidePropertyIn(defaultProperties, values, "autoSwitchFallback");
     }
+
+    if (values.translationStrategy === "exclusion") {
+        hidePropertyIn(defaultProperties, values, "includedElements");
+    } else {
+        hidePropertyIn(defaultProperties, values, "excludedElements");
+    }
+
     return defaultProperties;
 }

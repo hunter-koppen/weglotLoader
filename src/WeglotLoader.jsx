@@ -10,7 +10,9 @@ export function WeglotLoader({
     languageLoad,
     autoSwitchFallback,
     unloadtranslation,
-    excludedElements
+    translationStrategy,
+    excludedElements,
+    includedElements
 }) {
     // Check if all nessecary values are available
     if ((!overwriteLanguage || overwriteLanguage.status === "available") && apiKey) {
@@ -26,7 +28,9 @@ export function WeglotLoader({
                 autoSwitch={autoSwitch}
                 autoSwitchFallback={autoSwitchFallback}
                 unloadtranslation={unloadtranslation}
+                translationStrategy={translationStrategy}
                 excludedElements={excludedElements}
+                includedElements={includedElements}
             />
         );
     } else {
